@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Андрей · портфолио юного программиста</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(145deg, #f7f9fc 0%, #e9edf2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    .portfolio-card {
+      max-width: 1100px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border-radius: 3rem;
+      padding: 2.5rem 2.5rem 2.5rem;
+      box-shadow: 0 25px 50px -8px rgba(0, 20, 40, 0.25), 0 8px 20px rgba(0,0,0,0.05);
+      border: 1px solid rgba(255,255,255,0.4);
+      transition: all 0.2s ease;
+    }
+
+    /* шапка */
+    .profile-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1.5rem 2.5rem;
+      margin-bottom: 2.2rem;
+    }
+
+    .avatar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #1f2a3f;
+      width: 90px;
+      height: 90px;
+      border-radius: 30px;
+      color: white;
+      font-weight: 700;
+      font-size: 2.4rem;
+      letter-spacing: 1px;
+      box-shadow: 0 12px 18px -6px rgba(0,0,0,0.15);
+      background-image: radial-gradient(circle at 30% 30%, #3d4e6b, #141e2b);
+      flex-shrink: 0;
+    }
+
+    .profile-title h1 {
+      font-size: 2.6rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #0b1a2b;
+      line-height: 1.1;
+    }
+
+    .profile-title .age-badge {
+      display: inline-block;
+      font-size: 1rem;
+      font-weight: 600;
+      background: #2a3f5a;
+      color: white;
+      padding: 0.2rem 1.2rem;
+      border-radius: 60px;
+      margin-left: 0.5rem;
+      vertical-align: middle;
+      letter-spacing: 0.3px;
+      box-shadow: inset 0 1px 3px rgba(255,255,255,0.2);
+    }
+
+    .profile-title .subhead {
+      font-size: 1.1rem;
+      color: #3e4f66;
+      font-weight: 400;
+      margin-top: 0.2rem;
+      border-left: 4px solid #2a3f5a;
+      padding-left: 1rem;
+    }
+
+    /* секция слайдера */
+    .slider-section {
+      margin: 1.8rem 0 0.8rem;
+    }
+
+    .slider-section h2 {
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: #0b1a2b;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1.2rem;
+      letter-spacing: -0.3px;
+    }
+
+    .slider-section h2 span {
+      background: #1f2a3f;
+      color: white;
+      font-size: 1rem;
+      padding: 0.1rem 0.9rem;
+      border-radius: 40px;
+      font-weight: 500;
+    }
+
+    /* контейнер слайдера (горизонтальный скролл) */
+    .skills-slider {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      gap: 1.8rem;
+      padding: 1rem 0.3rem 1.2rem;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: #2a3f5a #d6dee7;
+    }
+
+    .skills-slider::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .skills-slider::-webkit-scrollbar-track {
+      background: #d6dee7;
+      border-radius: 20px;
+    }
+
+    .skills-slider::-webkit-scrollbar-thumb {
+      background: #2a3f5a;
+      border-radius: 20px;
+      transition: 0.2s;
+    }
+
+    .skills-slider::-webkit-scrollbar-thumb:hover {
+      background: #1a2b3f;
+    }
+
+    /* карточка навыка */
+    .skill-card {
+      flex: 0 0 220px;
+      min-width: 200px;
+      background: white;
+      border-radius: 2rem;
+      padding: 1.8rem 1.2rem 1.5rem;
+      box-shadow: 0 12px 22px -10px rgba(0, 0, 0, 0.08);
+      border: 2px solid transparent;
+      backdrop-filter: blur(2px);
+      transition: transform 0.2s ease, box-shadow 0.2s, border-color 0.2s, background 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .skill-card:hover {
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 24px 36px -14px rgba(0, 20, 40, 0.2);
+      border-color: #b0c7dd;
+    }
+
+    .skill-card.active {
+      border-color: #1f2a3f;
+      background: #f2f6fc;
+      box-shadow: 0 8px 20px rgba(26, 55, 96, 0.15);
+      transform: translateY(-4px);
+    }
+
+    .skill-icon {
+      font-size: 3.2rem;
+      line-height: 1;
+      margin-bottom: 0.6rem;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05));
+    }
+
+    .skill-card h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #0b1a2b;
+      letter-spacing: -0.3px;
+    }
+
+    .skill-card .skill-level {
+      display: inline-block;
+      background: #eef3f8;
+      padding: 0.2rem 1rem;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #1f344b;
+      margin: 0.4rem 0 0.5rem;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+
+    .skill-card p {
+      font-size: 0.85rem;
+      color: #364b62;
+      line-height: 1.4;
+      font-weight: 400;
+      margin-top: 0.2rem;
+    }
+
+    .skill-tag {
+      margin-top: 0.7rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      justify-content: center;
+    }
+
+    .skill-tag span {
+      background: #e3eaf1;
+      padding: 0.15rem 0.8rem;
+      border-radius: 30px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #1d3146;
+      letter-spacing: 0.2px;
+    }
+
+    /* ДЕТАЛЬНАЯ ПАНЕЛЬ (раскрывается внизу) */
+    .detail-panel {
+      margin-top: 1.8rem;
+      background: white;
+      border-radius: 2rem;
+      padding: 0 1.8rem;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94), padding 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
+      opacity: 0;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+      border: 1px solid rgba(200, 212, 225, 0.3);
+      pointer-events: none;
+    }
+
+    .detail-panel.open {
+      max-height: 320px;       /* достаточно для контента */
+      padding: 1.8rem 1.8rem 2rem;
+      opacity: 1;
+      margin-top: 2rem;
+      pointer-events: auto;
+      border-color: #cddae9;
+    }
+
+    .detail-panel .detail-content {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .detail-panel .detail-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #0b1a2b;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .detail-panel .detail-title .detail-icon {
+      font-size: 2rem;
+    }
+
+    .detail-panel .detail-description {
+      font-size: 1rem;
+      color: #1f344b;
+      line-height: 1.6;
+      max-width: 90%;
+    }
+
+    .detail-panel .detail-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem 2rem;
+      margin-top: 0.4rem;
+      font-size: 0.9rem;
+      color: #2f4a62;
+    }
+
+    .detail-panel .detail-meta strong {
+      font-weight: 600;
+      color: #0b1a2b;
+    }
+
+    .detail-panel .detail-close {
+      align-self: flex-start;
+      margin-top: 0.6rem;
+      background: #eef3f8;
+      border: none;
+      padding: 0.3rem 1.4rem;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 0.8rem;
+      color: #1f344b;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .detail-panel .detail-close:hover {
+      background: #d5dfe9;
+    }
+
+    .extra-info {
+      margin-top: 2.2rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(60, 80, 105, 0.15);
+      padding-top: 1.6rem;
+      color: #1f344b;
+    }
+
+    .quote {
+      font-style: italic;
+      font-weight: 400;
+      background: #eef3f8;
+      padding: 0.3rem 1.5rem;
+      border-radius: 40px;
+      font-size: 0.95rem;
+      color: #1f344b;
+      letter-spacing: 0.2px;
+    }
+
+    .scroll-hint {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #3f5770;
+      background: rgba(255,255,255,0.5);
+      padding: 0.2rem 1.2rem 0.2rem 0.8rem;
+      border-radius: 40px;
+      backdrop-filter: blur(2px);
+    }
+
+    .scroll-hint span {
+      font-size: 1.3rem;
+      line-height: 1;
+    }
+
+    @media (max-width: 600px) {
+      .portfolio-card {
+        padding: 1.8rem 1.2rem;
+        border-radius: 2rem;
+      }
+      .profile-title h1 {
+        font-size: 2rem;
+      }
+      .profile-title .age-badge {
+        font-size: 0.8rem;
+        padding: 0.1rem 0.8rem;
+        margin-left: 0.2rem;
+      }
+      .avatar {
+        width: 70px;
+        height: 70px;
+        font-size: 1.8rem;
+      }
+      .skill-card {
+        flex: 0 0 170px;
+        min-width: 160px;
+        padding: 1.4rem 0.8rem;
+      }
+      .skill-icon {
+        font-size: 2.6rem;
+      }
+      .extra-info {
+        flex-direction: column;
+        gap: 0.8rem;
+        align-items: flex-start;
+      }
+      .detail-panel .detail-description {
+        max-width: 100%;
+      }
+      .detail-panel.open {
+        max-height: 400px;
+        padding: 1.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="portfolio-card">
+    <!-- шапка -->
+    <div class="profile-header">
+      <div class="avatar">А</div>
+      <div class="profile-title">
+        <h1>
+          Андрей
+          <span class="age-badge">33 года</span>
+        </h1>
+        <div class="subhead">Юный программист · творческий подход</div>
+      </div>
+    </div>
+
+    <!-- Слайдер -->
+    <div class="slider-section">
+      <h2>
+        🧰 Мои навыки
+        <span>кликни на карточку</span>
+      </h2>
+
+      <div class="skills-slider" id="skillsSlider">
+        <!-- карточка 1 -->
+        <div class="skill-card" data-skill="react">
+          <div class="skill-icon">⚛️</div>
+          <h3>React</h3>
+          <div class="skill-level">продвинутый</div>
+          <p>Компоненты, хуки, роутинг, стейт</p>
+          <div class="skill-tag"><span>JS</span><span>TS</span><span>Redux</span></div>
+        </div>
+        <!-- карточка 2 -->
+        <div class="skill-card" data-skill="python">
+          <div class="skill-icon">🐍</div>
+          <h3>Python</h3>
+          <div class="skill-level">средний</div>
+          <p>Автоматизация, Django, анализ</p>
+          <div class="skill-tag"><span>FastAPI</span><span>Pandas</span></div>
+        </div>
+        <!-- карточка 3 -->
+        <div class="skill-card" data-skill="sql">
+          <div class="skill-icon">🗄️</div>
+          <h3>SQL</h3>
+          <div class="skill-level">хорошо</div>
+          <p>PostgreSQL, MySQL, запросы</p>
+          <div class="skill-tag"><span>ORM</span><span>Alchemy</span></div>
+        </div>
+        <!-- карточка 4 -->
+        <div class="skill-card" data-skill="css">
+          <div class="skill-icon">🎨</div>
+          <h3>CSS / UI</h3>
+          <div class="skill-level">продвинутый</div>
+          <p>Flex, Grid, анимации</p>
+          <div class="skill-tag"><span>Tailwind</span><span>Figma</span></div>
+        </div>
+        <!-- карточка 5 -->
+        <div class="skill-card" data-skill="flutter">
+          <div class="skill-icon">📱</div>
+          <h3>Flutter</h3>
+          <div class="skill-level">базовый</div>
+          <p>Кроссплатформенные приложения</p>
+          <div class="skill-tag"><span>Dart</span><span>Firebase</span></div>
+        </div>
+        <!-- карточка 6 -->
+        <div class="skill-card" data-skill="git">
+          <div class="skill-icon">⚙️</div>
+          <h3>Git & CI</h3>
+          <div class="skill-level">средний</div>
+          <p>GitHub Actions, ветвление</p>
+          <div class="skill-tag"><span>Bash</span><span>Docker</span></div>
+        </div>
+        <!-- карточка 7 -->
+        <div class="skill-card" data-skill="algo">
+          <div class="skill-icon">🧠</div>
+          <h3>Алгоритмы</h3>
+          <div class="skill-level">хорошо</div>
+          <p>Структуры данных, поиск</p>
+          <div class="skill-tag"><span>LeetCode</span><span>Олимпиады</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ДЕТАЛЬНАЯ ПАНЕЛЬ (раскрывается) -->
+    <div class="detail-panel" id="detailPanel">
+      <div class="detail-content" id="detailContent">
+        <!-- динамически заполняется из JS -->
+      </div>
+    </div>
+
+    <!-- доп. инфо -->
+    <div class="extra-info">
+      <div class="quote">💡 «Код — это моя суперсила»</div>
+      <div class="scroll-hint"><span>↔</span> листай навыки</div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const slider = document.getElementById('skillsSlider');
+      const detailPanel = document.getElementById('detailPanel');
+      const detailContent = document.getElementById('detailContent');
+
+      // Данные для подробной информации по каждому навыку
+      const skillDetails = {
+        react: {
+          icon: '⚛️',
+          title: 'React',
+          description: 'Создаю масштабируемые интерфейсы с использованием хуков, контекста и маршрутизации. Работаю с Redux Toolkit, RTK Query, оптимизирую рендеринг.',
+          projects: '3 коммерческих проекта, 2 пет-проекта',
+          experience: '2+ года'
+        },
+        python: {
+          icon: '🐍',
+          title: 'Python',
+          description: 'Пишу скрипты для автоматизации, парсинга и бэкенд-сервисы. Использую FastAPI для REST API, знаком с Django ORM и асинхронностью.',
+          projects: 'Телеграм-боты, парсеры, API для CRM',
+          experience: '1.5 года'
+        },
+        sql: {
+          icon: '🗄️',
+          title: 'SQL',
+          description: 'Проектирование схем, сложные JOIN-запросы, оконные функции, оптимизация индексов. Работал с PostgreSQL и MySQL в продакшене.',
+          projects: 'Аналитические дашборды, отчёты',
+          experience: '2 года'
+        },
+        css: {
+          icon: '🎨',
+          title: 'CSS / UI',
+          description: 'Верстка сложных макетов, адаптивность, анимации. Работаю с Tailwind, знаком с дизайн-системами и Figma.',
+          projects: 'Лендинги, админки, UI-киты',
+          experience: '3 года'
+        },
+        flutter: {
+          icon: '📱',
+          title: 'Flutter',
+          description: 'Разработка кроссплатформенных мобильных приложений. Использую BLoC, провайдеры, интегрирую Firebase.',
+          projects: '2 приложения в стадии MVP',
+          experience: '1 год'
+        },
+        git: {
+          icon: '⚙️',
+          title: 'Git & CI',
+          description: 'Настройка пайплайнов в GitHub Actions, автоматизация тестов и деплоя. Владею стратегиями ветвления Git Flow.',
+          projects: 'CI/CD для 5 проектов',
+          experience: '2 года'
+        },
+        algo: {
+          icon: '🧠',
+          title: 'Алгоритмы',
+          description: 'Решаю задачи на структуры данных (деревья, графы, хеш-таблицы). Участвую в соревнованиях и решаю LeetCode.',
+          projects: '50+ решённых задач, участие в 3 хакатонах',
+          experience: '1.5 года'
+        }
+      };
+
+      // Функция открытия деталей
+      function openDetail(skillKey, cardElement) {
+        const data = skillDetails[skillKey];
+        if (!data) return;
+
+        // Убираем активный класс со всех карточек
+        document.querySelectorAll('.skill-card').forEach(c => c.classList.remove('active'));
+        if (cardElement) {
+          cardElement.classList.add('active');
+        }
+
+        // Заполняем панель
+        detailContent.innerHTML = `
+          <div class="detail-title">
+            <span class="detail-icon">${data.icon}</span>
+            ${data.title}
+          </div>
+          <div class="detail-description">${data.description}</div>
+          <div class="detail-meta">
+            <span><strong>Проекты:</strong> ${data.projects}</span>
+            <span><strong>Опыт:</strong> ${data.experience}</span>
+          </div>
+          <button class="detail-close" id="closeDetailBtn">✕ Закрыть</button>
+        `;
+
+        // Открываем панель
+        detailPanel.classList.add('open');
+
+        // Обработчик для кнопки закрытия внутри панели
+        const closeBtn = document.getElementById('closeDetailBtn');
+        if (closeBtn) {
+          closeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeDetail();
+          });
+        }
+
+        // Прокручиваем к панели (плавно)
+        detailPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+
+      function closeDetail() {
+        detailPanel.classList.remove('open');
+        document.querySelectorAll('.skill-card').forEach(c => c.classList.remove('active'));
+        // Очищаем контент через небольшую задержку (после анимации)
+        setTimeout(() => {
+          if (!detailPanel.classList.contains('open')) {
+            detailContent.innerHTML = '';
+          }
+        }, 400);
+      }
+
+      // Обработка клика по карточкам
+      document.querySelectorAll('.skill-card').forEach(card => {
+        card.addEventListener('click', function(e) {
+          const skillKey = this.dataset.skill;
+          // Если панель уже открыта и кликнули по той же карточке – закрываем
+          if (detailPanel.classList.contains('open') && this.classList.contains('active')) {
+            closeDetail();
+            return;
+          }
+          openDetail(skillKey, this);
+        });
+      });
+
+      // Закрытие по клику вне карточек и панели (на фон)
+      document.addEventListener('click', function(e) {
+        const panel = document.getElementById('detailPanel');
+        const isClickOnCard = e.target.closest('.skill-card');
+        const isClickOnPanel = e.target.closest('.detail-panel');
+        // если клик не по карточке и не по панели — закрываем
+        if (!isClickOnCard && !isClickOnPanel && detailPanel.classList.contains('open')) {
+          closeDetail();
+        }
+      });
+
+      // Горизонтальный скролл колесом мыши
+      slider.addEventListener('wheel', (e) => {
+        const deltaX = e.deltaX;
+        const deltaY = e.deltaY;
+        if (Math.abs(deltaY) > Math.abs(deltaX) && slider.scrollWidth > slider.clientWidth) {
+          e.preventDefault();
+          slider.scrollLeft += deltaY * 0.8;
+        } else if (Math.abs(deltaX) > 0) {
+          slider.scrollLeft += deltaX;
+          e.preventDefault();
+        }
+      }, { passive: false });
+
+      // Тач-события для слайдера
+      let touchStartX = 0, touchStartY = 0;
+      slider.addEventListener('touchstart', (e) => {
+        const touch = e.touches[0];
+        touchStartX = touch.clientX;
+        touchStartY = touch.clientY;
+      }, { passive: true });
+
+      slider.addEventListener('touchmove', (e) => {
+        if (e.touches.length !== 1) return;
+        const touch = e.touches[0];
+        const deltaX = touch.clientX - touchStartX;
+        const deltaY = touch.clientY - touchStartY;
+        if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 8) {
+          e.preventDefault();
+        }
+      }, { passive: false });
+
+      // если клик по закрытию (доп. безопасность)
+      console.log('Слайдер + детализация готовы!');
+    })();
+  </script>
+</body>
+</html>
